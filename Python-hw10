@@ -1,0 +1,159 @@
+import matplotlib.pyplot as plt
+from scipy import misc
+import numpy as np
+
+
+#-----------------------------------------------------------------------------
+# Auxiliary function. Don't modify it.
+def np_array_to_ascii(darr):
+    return ''.join([chr(item) for item in darr])
+
+#-----------------------------------------------------------------------------
+# Auxiliary function. Don't modify it.
+def ascii_to_np_array(s):
+    return np.fromstring(s, dtype=np.uint8)
+
+#-----------------------------------------------------------------------------
+
+#########################################
+# Question A-1 - do not delete this comment
+#########################################
+def load_data(filename):
+    """ remember to take care of IOErrors"""
+    try:
+        f=open(filename,'r')
+        header_line = f.readline()
+        header_line = header_line.strip(',\n')
+        column_names = header_line.split(',')
+        mat=[]
+        row_names=[]
+        for line in f:
+            tokens = line.split(',')
+            row_names.append(tokens[0])
+            values = [float(n) for n in tokens[1:]]
+            mat.append(values)
+        row_names = np.asarray(row_names)   
+        column_names = np.asarray(column_names)
+        data=np.asarray(mat,dtype=float)
+    except IOError as err:
+        print err.args[1]
+        return np.array([]),np.array([]),np.array([])
+
+    return data, column_names, row_names
+
+#########################################
+# Question A-2 - do not delete this comment
+#########################################
+def get_diff_values(prices):
+    first_column= prices[:,0]
+    new_array = np.hstack((np.transpose([first_column]), prices[:,0:-1]))
+    diff= prices-new_array
+    return diff
+    
+
+#########################################
+# Question A-3 - do not delete this comment
+#########################################
+def get_diff_percentage(prices):
+    first_column = prices[:,0]
+    new_array=np.hstack((np.transpose([first_column]),prices[:,0:-1]))
+    new_mat = 100*((get_diff_values(prices))/new_array)
+    return new_mat
+
+#########################################
+# Question A-4 - do not delete this comment
+#########################################
+def get_stable(prm, share_names):
+    return share_names[(prm>0).sum(axis=1)==len(prm)-1]
+
+#-----------------------------------------------------------------------------
+def part1_main():
+    prices, header, share_names = load_data('matrix.csv')
+    print prices, '\n', header, '\n', share_names
+    print type(prices)
+    print type(header)
+    print type(share_names)
+    print get_diff_values(prices)
+    prm = get_diff_percentage(prices)
+    print prm
+    print get_stable(prm, share_names)
+
+#-----------------------------------------------------------------------------
+
+#########################################
+# Question B-1 - do not delete this comment
+#########################################
+def arr_dist(a1, a2):
+    return np.sum(np.maximum(a1,a2)-np.minimum(a1,a2))
+
+#########################################
+# Question B-2 - do not delete this comment
+#########################################
+def find_best_place(im, np_msg):
+    best_value = 99999999
+    for x in range(im.shape[0]-len(np_msg)):
+        for y in range(im.shape[1]):
+            nlst=im[x:x+len(np_msg),y]
+       #     print type(nlst), nlst.shape
+        #    print type(ascii_to_np_array(np_msg)), ascii_to_np_array(np_msg).shape
+            if best_value>arr_dist(ascii_to_np_array(np_msg),nlst):
+                best_x = x
+                best_y = y
+            best_value=(min(best_value,arr_dist(ascii_to_np_array(np_msg),nlst)))
+    return (best_x,best_y)
+            
+
+#########################################
+# Question B-3 - do not delete this comment
+#########################################
+def create_image_with_msg(im, img_idx, np_msg):
+    
+    newIm=np.copy(im)
+    newIm[img_idx[0],img_idx[1]:img_idx[1]+len(np_msg)]=np_msg
+    newIm[0,0]=img_idx[0]
+    newIm[0,1]=img_idx[1]
+    newIm[0,2]=len(np_msg)
+    return newIm
+
+#########################################
+# Question B-4 - do not delete this comment
+#########################################
+def put_message(im, msg):
+    nmsg=ascii_to_np_array(msg)
+    best_place = find_best_place(im,nmsg)
+    final = create_image_with_msg(im,best_place,nmsg)
+    return final
+
+#########################################
+# Question B-5 - do not delete this comment
+#########################################
+def get_message(im):
+    final = im[im[0,0],im[0,1]:im[0,1]+im[0,2]]
+    print final
+    print type(final)
+    return np_array_to_ascii(final)
+
+#-----------------------------------------------------------------------------
+
+def part2_main():
+    msg1 = 'Hello, NUMPY!'
+    orig_file_name = 'parrot.png'
+    im1 = misc.imread(orig_file_name)
+    print find_best_place(im1,msg1)
+    im2 = put_message(im1, msg1)
+
+    plot_image = np.concatenate((im1, im2), axis=1)
+
+    plt.figure()
+    plt.imshow(plot_image, cmap=plt.cm.gray)
+    plt.show()
+
+    msg2 = get_message(im2)
+    print msg2
+
+#-----------------------------------------------------------------------------
+
+part1_main()
+part2_main()
+
+#============================ END OF FILE ====================================
