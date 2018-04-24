@@ -1,0 +1,170 @@
+''' Exercise #2. Python for Engineers.'''
+
+#########################################
+# Question 1 - do not delete this comment
+#########################################
+
+A = [1, 3, 5, 0, 3, 1, 5]
+
+# Write the rest of the code for question 1 below here.
+sumtillnow = 0
+for i in A:
+    sumtillnow += i
+    
+print sumtillnow/float(len(A))
+
+
+#########################################
+# Question 2 - do not delete this comment
+#########################################
+A = [1, 2, 5, 4]
+B = [3, 1, 4, 0]
+
+
+# Write the rest of the code for question 2 below here.
+sums = 0
+N=len(A)
+if N > 1 and (len(A) == len(B)):
+
+    currentA = A[0]
+    for i in A:
+        if i > currentA:
+            currentA = i
+    print currentA
+
+    currentB = B[0]
+    for j in B:
+        if j < currentB:
+            currentB = j
+    print currentB
+
+    for l in range(N) :
+            multi = A[l] * B[N-1-l]
+            sums += multi 
+    print sums
+else:
+    print "NA"
+
+
+	
+#########################################
+# Question 3 - do not delete this comment
+#########################################
+
+val = "how much wood could a woodchuck chuck"
+val2 = "pam pam" 
+#val3 = "how much wood could a woodchuck chuck tuck luck duck yuck"
+# Write the rest of the code for question 3 below here.
+
+spaces=0
+seperator = ' '
+newval = val
+x = len(val.split()) % 3
+if len(val.split()) < 2:
+    print newval
+    
+
+elif len(val.split()) > 0:
+    for i in val:
+        if i.isspace():
+            spaces +=1
+          #  print spaces
+        if spaces == 3:
+            newval = val
+        if (spaces % 3 == 0) and (spaces != 0):
+            y = newval.split(' ')
+            y[spaces-1] = y[spaces-2]
+            newval = seperator.join(y)
+print newval
+
+
+#########################################
+# Question 4 - do not delete this comment
+#########################################
+A = [1, 5, 4]
+B = [7, 5, 10]
+
+# Write the rest of the code for question 4 below here.
+A.sort()
+#print A
+B.reverse()
+#print B
+C = []
+C.extend(A)
+C.extend(B)
+print C
+
+
+
+
+
+#########################################
+# Question 5 - do not delete this comment
+#########################################
+
+A = [2, 6, 10, 14] 
+B = [5, 4, 3, 2] 
+C = [5, 4, 3, 0] 
+
+# Write the rest of the code for question 5 below here.
+#D=[2, 6, 10, 14, 18, 22, 26, 30]
+for i in range(len(A)-1):
+    d = A[1] - A[0]
+    if d != A[i+1]-A[i]:
+        print False
+        print i
+        break
+    elif d == A[i+1]-A[i] and not (i==len(A)-2):
+        continue
+    elif (A[len(A)-1]-A[len(A)-2]) == d:
+        print True
+        print d
+    
+
+#########################################
+# Question 6 - do not delete this comment
+#########################################
+
+items = [ ["rice", 1.0, 10.0], ["salt", 4.0, 15.0], ["milk", 1.0, 20.0], ["eggs", 1.0, 20.0]  ]
+items2 = [ ["rice", 1.0, 10.0], ["salt", -4.0, 15.0], ["milk", 1.0, 20.0], ["eggs", 1.0, -20.0]  ]
+
+# Write the rest of the code for question 6 below here.
+
+totprofit = 0
+for i in range(len(items)):
+    profit = items[i][1]*items[i][2]
+    totprofit += profit
+    if (items[i][0].isalpha()) and (len(items[i]) == 3) and (items[i][1] > 0.0) and (items[i][2] > 0.0):
+        while (i == (len(items)-1)):
+            print totprofit
+            break
+    else:
+        print items[i][0]
+        break
+
+
+
+#########################################
+# Question 7 - do not delete this comment
+#########################################
+
+Matrix = [ [4, 5, 3, 8], [0, 2, 4, 9], [10, 9, 2, 2], [1, -3, 4, 4] ]
+Matrix2 = [ [1, 0], [2, -1] ]
+
+
+# Write the rest of the code for question 7 below here.
+
+max_series_len = 1
+
+
+for i in range(len(Matrix)):
+    cur_series_len = 1
+    for j in range(len(Matrix[i])-1):
+        
+        if Matrix[i][j+1] > Matrix[i][j]:
+            cur_series_len += 1
+        if cur_series_len > max_series_len:
+            max_series_len = cur_series_len
+print max_series_len
+
+
