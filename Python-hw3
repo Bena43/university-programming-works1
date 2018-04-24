@@ -1,0 +1,193 @@
+#########################################
+# Question 1 - do not delete this comment
+#########################################
+
+TOMATO = "tomato"
+
+# Write the rest of the code for question 1 below here.
+
+def find_tomato(items):
+        j=-1
+        for i in (range(len(items))):
+                if items[i].lower() == "tomato":
+                        j=i
+                        break
+        return j
+                
+#########################################
+# Question 2 - do not delete this comment
+#########################################
+
+VOWELS = "AEIOU"
+
+# Write the rest of the code for question 2 below here.
+
+def even_vowels(sentence):
+        sumseven = 0
+        for i in VOWELS:
+                for j in sentence:
+                        if j.lower() == i.lower():
+                                sumseven += 1
+        return sumseven % 2 == 0
+	
+#########################################
+# Question 3 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 3 below here.
+
+def three_div(number):
+        sum3dividors = 0
+        number = str(number)
+        for i in number:
+                i = int(i)
+                if i % 3 ==0:
+                        sum3dividors += 1
+        return sum3dividors
+                        
+	
+#########################################
+# Question 4 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 4 below here.
+
+def is_name(test_string):
+        spaces = 0
+        for i in range(1,len(test_string)):
+                if test_string[0].isupper():
+                        if test_string[i].isspace():
+                                spaces +=1
+                                if test_string[i+1].isupper():
+                                        continue
+                                else:
+                                        return False
+                                        break
+                        elif (i == 0 or test_string[i].islower()) or test_string[i-1].isspace():
+                                continue
+                        else:
+                                return False
+                                break
+                else:
+                        return False
+                        break
+        if spaces == 1:
+                return True
+        else:
+                return False
+                                
+                                
+
+#########################################
+# Question 5 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 5 below here.
+
+##add functions below
+def find_max(grocery_list):
+        global maxprice
+        maxprice = -1
+        for i in range(len(grocery_list)):
+                if maxprice < grocery_list[i][1]:
+                        maxprice = grocery_list[i][1]
+                        global highest_item
+                        highest_item = grocery_list[i][0]
+                        global higehest_item_index
+                        highest_item_index = i
+        return highest_item_index
+        
+
+def check_list(grocery_list,maximal_budget):
+        sums=0
+        for j in range(len(grocery_list)):
+                sums += grocery_list[j][1]
+        return not sums > maximal_budget
+
+##add functions above
+
+def adjust_to_recession(grocery_list,maximal_budget):
+        for k in range(len(grocery_list)):
+                
+                if check_list(grocery_list,maximal_budget) == False:
+                        print "You cannot afford", grocery_list[int(find_max(grocery_list))][0]
+                        removed = grocery_list.pop(find_max(grocery_list))
+                if grocery_list == []:
+                        print "Empty list"
+                        return None
+        print grocery_list[0][0],
+        for k in range(0,len(grocery_list)-1):
+                print "," + grocery_list[k+1][0],
+
+
+        print ""
+        print "Go Shop!"
+
+#########################################
+# Question 6 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 6 below here.
+
+def max_column(mat):
+        if mat == []:
+                return -1
+        global j
+        j = 0
+        sums = 0
+        next_sum = 0
+        
+        for m in range(len(mat)):
+                sums += mat[m][0]
+                
+        highest_sum = sums
+        for n in range(len(mat[m])):
+                next_sum = 0
+                for m in range(len(mat)):
+                        next_sum += mat[m][n]
+                        if highest_sum < next_sum:
+                                highest_sum = next_sum
+                                j = n
+        return j
+	
+
+#########################################
+# Question 7 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 7 below here.
+
+def create_matrix(m,n):
+        mat = []
+        for i in range(m):
+                mat.append([])
+                for j in range(n):
+                        mat[i].extend([(i)*n+j+1])
+        print mat
+	
+#########################################
+# Question 8 - do not delete this comment
+#########################################
+
+MUL_ERROR = "Error, Matrices cannot be multiplied"
+
+# Write the rest of the code for question 8 below here.
+def multiply_matrix(A,B):
+        mat=[]
+        sums = 0
+        if len(A) == len(B[0]):
+                for i in range(len(A)):
+                        mat.append([])
+                        for j in range(len(B[0])):
+                                mat[i].extend([0])
+                                for k in range(len((B))):
+                                        mat[i][j]+= A[i][k] * B[k][j]
+                                        
+        else:
+                return MUL_ERROR
+        print mat
