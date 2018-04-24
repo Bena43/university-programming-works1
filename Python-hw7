@@ -1,0 +1,96 @@
+#########################################
+# Question 1 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 1 below here.
+def catalan_rec(n):
+        
+        return ( 1 if n == 0
+                 else sum( catalan_rec(i) * catalan_rec(n - 1 - i)
+                       for i in range(n)) )
+
+  
+
+
+
+def catalan_mem(n,memo={0:1}):
+        if n not in memo:
+                memo[n] = sum((catalan_mem(i) * catalan_mem(n - i - 1)) for i in range(n))
+
+
+        return memo[n]
+
+	
+# If you want to do the bonus, define the functions and implement below
+
+        
+#########################################
+# Question 2 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 2 below here.
+def atm_rec(amount, bills, n):
+        if amount==0:
+            if n==0:
+                return True
+            else:
+                return False
+        if len(bills)==0 and amount!=0:
+            return False
+        if amount<0:
+            return False
+        option1 = atm_rec(amount - bills[-1],bills,n-1)
+        option2 = atm_rec(amount,bills[0:-1], n)
+        return option1 or option2
+
+def atm_mem(amount, bills, n,memo = None):
+        key = (amount, n)
+        if memo == None:
+                memo = {}
+        if amount==0:
+            if n==0:
+                return True
+            else:
+                return False
+        if amount < 0:
+                return False
+        if len(bills)==0 and amount!=0:
+                return False
+        if key not in memo:
+                option1 = atm_mem(amount - bills[-1],bills,n-1)
+                option2 = atm_mem(amount,bills[0:-1], n)
+                memo[key] = option1 or option2
+        return memo[key]
+	
+	
+#########################################
+# Question 3 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 3 below here.
+def max_trail(pyramid,row=0,col=0): 
+        if row == len(pyramid)-2:  
+                option1 = pyramid[row+1][col]
+                option2 = pyramid[row+1][col+1]
+                return max(option1,option2) + pyramid[row][col]
+        return max(max_trail(pyramid, row+1, col), max_trail(pyramid,row+1,col+1)) + pyramid[row][col]
+
+
+
+def max_trail_mem(pyramid,row=0,col=0,memo=None):
+        key = (row,col)
+        if memo == None:
+                memo = {}
+        if row == len(pyramid)-2:  
+                option1 = pyramid[row+1][col]
+                option2 = pyramid[row+1][col+1]
+                return max(option1,option2) + pyramid[row][col]
+        if key not in memo:
+                memo[key] = max(max_trail_mem(pyramid, row+1, col, memo), max_trail_mem(pyramid,row+1,col+1,memo)) + pyramid[row][col]
+        return memo[key]
+ 
+
+
