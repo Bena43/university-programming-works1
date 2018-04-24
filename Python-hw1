@@ -1,0 +1,76 @@
+''' Exercise #1. Python for Engineers.'''
+
+#---Question-1-----------------------------------------------------------------
+a = 3.0 # Replace ??? with a number (int/float) of your choice.
+diag = 5.0 # Replace ??? with a number (int/float) of your choice.
+
+# Write the rest of the code for question 1 below here.
+b = (diag**2 - a**2)**0.5
+print "Length of b " + str(b)
+Area = a*b
+print "Area is " + str(Area)
+Perimeter = 2*a + 2*b
+print "Perimeter is " + str(Perimeter)
+
+#---Question-2-----------------------------------------------------------------
+a1 = 4.0 # Replace ??? with a positive number (int/float) of your choice.
+q  = 5.0 # Replace ??? with a positive number (int/float) of your choice.
+n  = 3.0 # Replace ??? with a positive integer of your choice.
+
+# Write the code for question 2 below here.
+an = a1 * (q**n)
+print "The " +str(n) "th number in this series is " + str(an)
+
+#---Question-3-----------------------------------------------------------------
+donor = 'B' # Replace ??? with ('AB'/'A'/'B','O').
+recipient = 'B' # Replace ??? with ('AB'/'A'/'B','O').
+
+# Write the code for question 3 below here.
+if (donor == 'AB' or donor == 'A' or donor == 'B' or donor == 'O') and (recipient == 'AB' or recipient == 'A'  or recipient == 'B' or recipient == 'O'):
+        if donor == recipient:
+                print True
+        elif donor == 'O': 
+                print True
+        elif recipient == 'AB':
+                print True
+        else:
+                print False
+
+else:
+        print "Invalid input"
+
+
+#---Question-4-----------------------------------------------------------------
+str1 = "abcdxRdcbM7abcd"  # Replace ??? with a string of your choice.
+
+# Write the code for question 4 below here.
+#print str1[len(str1)-1] + str1[len(str1) - 2] + str1[len(str1) - 3]
+#print str1[(len(str1)/2):(len(str1)/2)+3]
+if len(str1) % 2.0 != 0:
+        #print "1work"
+        if str1[0:4] == str1[-4:]:
+              #  print "2work"
+                if str1[5] == "r" or str1[5] == "R":
+                    #    print "3work"
+                        if str1[(len(str1)/2 - 1):(len(str1)/2)+2] == str1[len(str1)-1] + str1[len(str1) - 2] + str1[len(str1) - 3]:
+                                print "Yes"
+                        else:
+                                print "No"
+                else:
+                        print "No"
+        else:
+                print "No"
+else:
+        print "No"
+#---Question-5-----------------------------------------------------------------
+str2 = "Ab$gx7Nxfcz" # Replace ??? with a string of your choice.
+
+# Write the code for question 5 below here.
+letter3 = str2[2]
+if str.isalpha(letter3):
+        letter3 = str.swapcase(str2[2])
+else:
+        letter3 = '%'
+
+strnew = str2[len(str2)-1] + str2[1] + letter3 + str2[3:len(str2)-1:] + str2[0]
+print strnew
