@@ -1,0 +1,185 @@
+#########################################
+# Question 1 - do not delete this comment
+#########################################
+
+# Write the rest of the code for question 1 below here.
+
+def sum_file_nums(infile):
+    lst = []
+    sums = 0.0
+    x = open(infile,'r')
+    lst = x.readlines()
+    lstnew = []
+    for i in range(len(lst)):
+        g = lst[i].strip('\n')
+        if lstnew == []:
+            lstnew = [g]
+        else:
+            lstnew.append(g)
+
+    for i in range(len(lstnew)):
+        lstnew[i] =float(lstnew[i])
+    for t in lstnew:
+        sums += t
+    x.close()
+    
+
+    return sums
+
+
+#########################################
+# Question 2 - do not delete this comment
+#########################################
+
+# Write the rest of the code for question 2 below here.
+
+def filter_file_nums(infile, outfile):
+    x = open(infile,'r')
+    lst = x.readlines()
+    new_lst = []
+    for i in lst:
+        x = int(i.strip('\n'))
+        
+        if x % 3 == 0:
+            if new_lst == []:
+                new_lst = [x]
+            else:
+                new_lst.append(x) 
+    open(outfile,'w')
+    for i in range(len(new_lst)-1):
+        new_file = open(outfile,'a')
+        new_file.write(str(new_lst[i]) + '\n')
+    new_file = open(outfile,'a')
+    new_file.write(str(new_lst[len(new_lst)-1]))
+    new_file.close()
+
+
+
+    return outfile
+
+
+#########################################
+# Question 3 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 3 below here.
+
+def get_x_freqs(infile, outfile, x):
+    f = open(infile, 'r')
+    g = open(outfile, 'w')
+    c = f.read()
+    words_list = c.lower().strip().split()
+    dicti = {}
+    for word in words_list:
+        dicti[word] = dicti.get(word,0) + 1
+    shadow_list = dicti.items()
+    
+    for i in range(len(shadow_list)):
+        if shadow_list[i][1] >= x:
+            g.write(shadow_list[i][0] + '\n')
+    g.close()
+    
+    g = open(outfile, 'r')
+    if g.read() == '':
+        g.close()
+        g = open(outfile,'w')
+        g.write("no_words!")
+        g.close()
+    return outfile
+
+
+#########################################
+# Question 4 - do not delete this comment
+#########################################
+
+
+# Write the rest of the code for question 4 below here.
+
+def get_csv_matrix(infile):
+    g = open(infile, 'r')
+    t = g.readlines()
+    new_list = []
+    i = 1
+
+    for line in t:
+        tokens = line.strip().split(',')
+        try:
+            tokens_as_float = [float(n) for n in tokens]
+        except ValueError:
+            print 'Non-numeric field encountered in line ' + str(i)
+            g.close()
+            return None
+        while i == 1:
+            len_last_line = len(tokens_as_float)
+            break
+        if len_last_line !=len(tokens_as_float):
+            print 'Inconsistent number of fields detected in line ' + str(i)
+            g.close()
+            return None
+            
+        i+=1
+        len_last_line = len(tokens_as_float)
+        if new_list == []:
+            new_list = [tokens_as_float]
+        else:
+            new_list.append(tokens_as_float)
+    g.close()
+    return new_list
+    
+
+#########################################
+# Question 5 - do not delete this comment
+#########################################
+
+# Write the rest of the code for question 5 below here.
+
+def decode(input_text_file, code_mapping_file, output_text_file):
+    try:
+        input_path = open(input_text_file, 'r')
+        code_path = open(code_mapping_file, 'r')
+        output_path = open(output_text_file,'w')
+
+        
+        dicti = {}
+        new_splitted = []
+        for line in code_path:
+            splitted = line.strip().split(',')
+    
+        
+            dicti[splitted[0]] = splitted[1]
+        for line in input_path:
+            input_split = line.strip().split()
+
+        output_path.close()
+        output_path = open(output_text_file, 'a')
+        for i in input_split:
+            letter = dicti.get(i,'bug').lower()
+            try:
+                if letter == 'bug':
+                    raise ValueError('Missing decrypting for code '  + i)
+           
+            except ValueError:
+                print 'Missing decrypting for code ' + str(i)
+                output_path.close()
+                code_path.close()
+                input_path.close()
+                return
+            output_path.write(letter)
+        output_path.write('\n')
+        output_path.close()
+        code_path.close()
+        input_path.close()
+    except IOError:
+        print 'IO error encountered, cannot decode, exiting!'
+        output_path.close()
+        code_path.close()
+        input_path.close()
+        return
+        
+        
+                
+                
+                
+            
+    return
