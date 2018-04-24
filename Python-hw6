@@ -1,0 +1,118 @@
+#########################################
+# Question 1 - do not delete this comment
+#########################################
+
+def reverse_string(s):
+    if s=='':
+        return s
+    else:
+        return s[-1] + reverse_string(s[:-1])
+
+#########################################
+# Question 2 - do not delete this comment
+#########################################
+dicti = {}
+
+def min_sublist_sum(numbers, target):
+    if target == 0:
+        return 0
+    elif len(numbers) == 0:
+        return float("inf")
+    elif target < 0:
+        return float ("inf")
+    else:
+        option1=min_sublist_sum(numbers[:-1],target - numbers[-1]) +1
+        option2=min_sublist_sum(numbers[:-1],target)
+        return min(option1,option2)
+
+    
+        
+
+#########################################
+# Question 3 - do not delete this comment
+#########################################
+
+
+def uncover_cell(ms_board, ms_revealed, idx):
+    if ms_board[idx]=='*':
+        print 'boom!'
+        ms_revealed[idx]=True
+        return ms_revealed
+    elif ms_board[idx]> 0:
+        ms_revealed[idx]=True
+        return ms_revealed
+    elif ms_board[idx] == 0 and ms_revealed[idx] == False:
+        ms_revealed[idx]=True
+        if idx==len(ms_revealed)-1:
+            uncover_cell(ms_board,ms_revealed,idx-1)
+        elif idx==0:
+            uncover_cell(ms_board,ms_revealed,idx+1)
+        else:
+            uncover_cell(ms_board,ms_revealed,idx-1)
+            uncover_cell(ms_board,ms_revealed,idx+1)
+        return ms_revealed
+        
+
+#########################################
+# Question 4 - do not delete this comment
+#########################################
+
+
+def is_valid_paren(s, cnt=0):
+    if len(s) == 0:
+        if cnt == 0:
+            return True
+        else:
+            return False
+    if cnt < 0:
+        return False
+    if s[-1] == ')':
+        cnt +=1
+    elif s[-1] == '(':
+        cnt -=1
+
+    return is_valid_paren(s[:-1],cnt)
+    
+
+    
+    
+
+
+
+
+#########################
+# main code - do not delete this comment
+# You can add more validation cases below
+#########################
+
+assert reverse_string("abc") == "cba"
+assert reverse_string("Hello!") == "!olleH"
+
+
+assert min_sublist_sum([0,1,2,1], 2) == 1
+
+assert min_sublist_sum([0,1,1], 2) == 2
+assert min_sublist_sum([0,1,1], 3) == float("inf")
+assert min_sublist_sum([0,5,5,5],15) == 3
+
+ms_board = ["*", 1, 0, 0, 0, 1, "*", 2, "*", 1, 0, 0, 0, 0]
+ms_revealed = [False]*len(ms_board)
+
+ms_revealed1 = uncover_cell(ms_board, ms_revealed, 1)
+ms_revealed2 = uncover_cell(ms_board, ms_revealed1, 2)
+
+ms_revealed3 = uncover_cell(ms_board, ms_revealed2, 11)
+
+ms_revealed4 = uncover_cell(ms_board, ms_revealed3, 6)
+
+
+assert is_valid_paren("(.(a)") == False
+assert is_valid_paren("p(()r((0)))") == True
+assert is_valid_paren("(((((((((())))))))))")
+assert is_valid_paren("(()(()") == False
+assert is_valid_paren(")x(xxxx)(") == False
+assert is_valid_paren("((()((()))))") == True
+assert is_valid_paren(")(((()((())))())") == False
+
+
+
